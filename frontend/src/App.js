@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import {LoginPage, SignupPage,ActivationPage} from './Routes.js'
+import {LoginPage, SignupPage,ActivationPage,HomePage} from './Routes.js'
 import './App.css'
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
@@ -13,6 +13,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='/' element={<HomePage/>}/>
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/sign-up' element={<SignupPage/>}/>
         <Route path='/activation/:activation_token' element={<ActivationPage/>}/>
