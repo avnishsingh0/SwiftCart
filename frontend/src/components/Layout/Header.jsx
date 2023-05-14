@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import styles from "../../styles/styles";
 import { Link } from "react-router-dom";
 import { categoriesData, productData } from "../../static/data";
-import { AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
+import {
+  AiOutlineHeart,
+  AiOutlineSearch,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
-import DropDown from "./DropDown.jsx"
+import DropDown from "./DropDown.jsx";
 import { BiMenuAltLeft } from "react-icons/bi";
-import { CgProfile  } from "react-icons/cg";
-import Navbar from "./Navbar.jsx"
-const Header = ({activeHeading}) => {
+import { CgProfile } from "react-icons/cg";
+import Navbar from "./Navbar.jsx";
+const Header = ({ activeHeading }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
@@ -66,7 +70,7 @@ const Header = ({activeHeading}) => {
                     const d = i.name;
                     const Product_name = d.replace(/\s+/g, "-");
                     return (
-                      <Link to={`/product/${Product_name}`}>
+                      <Link key={index} to={`/product/${Product_name}`}>
                         <div className="w-full flex items-start-py-3">
                           <img
                             src={`${i.image_Url[0].url}`}
@@ -99,7 +103,7 @@ const Header = ({activeHeading}) => {
         <div
           className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
         >
-          <div>
+          <div onClick={() => setDropDown(!dropDown)}>
             <div className="relative h-[60px] mt-[10px] w-[270px] hidden 1000px:block">
               <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
               <button
@@ -118,16 +122,13 @@ const Header = ({activeHeading}) => {
                   setDropDown={setDropDown}
                 />
               ) : null}
-              
-          </div>
-          </div>
-           {/* navitems */}
-           <div className={`${styles.noramlFlex}`}>
-            <Navbar active={activeHeading} />
             </div>
-
-
-            <div className="flex">
+          </div>
+          {/* navitems */}
+          <div className={`${styles.noramlFlex}`}>
+            <Navbar active={activeHeading} />
+          </div>
+          <div className="flex">
             <div className={`${styles.noramlFlex}`}>
               <div
                 className="relative cursor-pointer mr-[15px]"
@@ -135,7 +136,7 @@ const Header = ({activeHeading}) => {
               >
                 <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
-                 0
+                  0
                 </span>
               </div>
             </div>
@@ -145,9 +146,12 @@ const Header = ({activeHeading}) => {
                 className="relative cursor-pointer mr-[15px]"
                 onClick={() => setOpenWishlist(true)}
               >
-                <AiOutlineShoppingCart size={30} color="rgb(255 255 255 / 83%)" />
+                <AiOutlineShoppingCart
+                  size={30}
+                  color="rgb(255 255 255 / 83%)"
+                />
                 <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
-                 1
+                  1
                 </span>
               </div>
             </div>
@@ -158,18 +162,13 @@ const Header = ({activeHeading}) => {
                 onClick={() => setOpenWishlist(true)}
               >
                 <Link to={"/login"}>
-                <CgProfile  size={30} color="rgb(255 255 255 / 83%)" />
+                  <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
                 </Link>
-                
               </div>
             </div>
-            </div>
-
-            
+          </div>
         </div>
       </div>
-
-
     </>
   );
 };
