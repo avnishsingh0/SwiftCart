@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import {LoginPage, SignupPage,ActivationPage,HomePage,ProductsPage} from './Routes.js'
+import {BrowserRouter, Route, Routes,} from 'react-router-dom'
+import {LoginPage, SignupPage,ActivationPage,HomePage,ProductsPage,BestSellingPage} from './Routes.js'
 import './App.css'
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
 import Store from './Redux/store.js'
 import { loadUser } from './Redux/Action/user.js'
+
 const App = () => {
   useEffect(() => {
     Store.dispatch(loadUser());
@@ -18,7 +19,8 @@ const App = () => {
         <Route path='/sign-up' element={<SignupPage/>}/>
         <Route path='/activation/:activation_token' element={<ActivationPage/>}/>
         <Route path='/products' element={<ProductsPage/>}/>
-        
+        <Route path='/best-selling' element={<BestSellingPage/>}/>
+
       </Routes>
       <ToastContainer
         position="bottom-center"
