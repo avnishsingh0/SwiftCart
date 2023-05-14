@@ -15,6 +15,7 @@ import Navbar from "./Navbar.jsx";
 import { useSelector } from "react-redux";
 import { backend_url } from "../../server";
 import Cart from "../Cart/Cart.jsx"
+import Wishlist from "../Wishlist/Wishlist.jsx"
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,6 +25,7 @@ const Header = ({ activeHeading }) => {
 
   const [openCart, setOpenCart] = useState(false);
   const [openWishlist, setOpenWishlist] = useState(false);
+
 
   const [open, setOpen] = useState(false);
 
@@ -181,6 +183,10 @@ const Header = ({ activeHeading }) => {
             </div>
             {/* cart popup */}
             {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
+
+            {/* wishlist popup */}
+            {openWishlist ? <Wishlist setOpenWishlist={setOpenWishlist} /> : null}
+
           </div>
         </div>
       </div>
