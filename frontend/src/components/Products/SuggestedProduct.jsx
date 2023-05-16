@@ -5,11 +5,11 @@ import styles from "../../styles/styles";
 import ProductCard from "../Route/ProductCard/ProductCard";
 
 const SuggestedProduct = ({ data }) => {
-  const [products,setProducts] = useState();
+  const [products, setProducts] = useState();
 
   useEffect(() => {
     const d =
-    productData && productData.filter((i) => i.category === data.category);
+      productData && productData.filter((i) => i.category === data.category);
     setProducts(d);
   }, []);
 
@@ -23,12 +23,9 @@ const SuggestedProduct = ({ data }) => {
             Related Product
           </h2>
           <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
-             {
-                products && products.map((i,index) => (
-                    <ProductCard data={i} key={index} />
-                ))
-             }
-      </div>
+            {products &&
+              products.map((i, index) => <ProductCard data={i} key={index} />)}
+          </div>
         </div>
       ) : null}
     </div>
