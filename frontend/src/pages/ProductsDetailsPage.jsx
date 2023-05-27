@@ -16,7 +16,7 @@ const ProductsDetailsPage = () => {
     useEffect(()=>{
         const data = allProducts && allProducts.find((i)=>i._id === productName)
         setData(data)
-    },[])
+    },[data,allProducts])
     console.log(allProducts)
     console.log(data)
 
