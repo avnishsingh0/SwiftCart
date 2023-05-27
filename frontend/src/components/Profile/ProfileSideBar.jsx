@@ -1,32 +1,37 @@
-import React, { useState } from "react";
-import { AiOutlineCreditCard, AiOutlineLogin, AiOutlineMessage } from "react-icons/ai";
-import { MdOutlineTrackChanges } from "react-icons/md";
+import React from "react";
+import { AiOutlineLogin, AiOutlineMessage } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
-
 import { HiOutlineReceiptRefund, HiOutlineShoppingBag } from "react-icons/hi";
-import { RxPerson } from "react-icons/rx";
+import {
+  MdOutlineAdminPanelSettings,
+  MdOutlinePassword,
+  MdOutlineTrackChanges,
+} from "react-icons/md";
 import { TbAddressBook } from "react-icons/tb";
-import { useNavigate } from "react-router-dom";
+import { RxPerson } from "react-icons/rx";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
-const ProfileSideBar = ({ setActive, active }) => {
+import { useSelector } from "react-redux";
+
+const ProfileSidebar = ({ setActive, active }) => {
   const navigate = useNavigate();
+ const {user} = useSelector((state) => state.user);
   const logoutHandler = () => {
     axios
       .get(`${server}/user/logout`, { withCredentials: true })
       .then((res) => {
         toast.success(res.data.message);
-        window.location.reload(true)
-        navigate("/login"); // navigate to login page
+        window.location.reload(true);
+        navigate("/login");
       })
       .catch((error) => {
         console.log(error.response.data.message);
       });
   };
-  
   return (
-    <div className="w-full bg-white shadow-sm rounded-[10px] p-4 pt-5">
+    <div className="w-full bg-white shadow-sm rounded-[10px] p-4 pt-4">
       <div
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(1)}
@@ -40,12 +45,6 @@ const ProfileSideBar = ({ setActive, active }) => {
           Profile
         </span>
       </div>
-
-      
-
-
-
-
       <div
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(2)}
@@ -59,10 +58,6 @@ const ProfileSideBar = ({ setActive, active }) => {
           Orders
         </span>
       </div>
-
-
-
-
       <div
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(3)}
@@ -73,10 +68,9 @@ const ProfileSideBar = ({ setActive, active }) => {
             active === 3 ? "text-[red]" : ""
           } 800px:block hidden`}
         >
-          Refund
+          Refunds
         </span>
       </div>
-
 
       <div
         className="flex items-center cursor-pointer w-full mb-8"
@@ -92,7 +86,6 @@ const ProfileSideBar = ({ setActive, active }) => {
         </span>
       </div>
 
-
       <div
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(5)}
@@ -107,18 +100,17 @@ const ProfileSideBar = ({ setActive, active }) => {
         </span>
       </div>
 
-
       <div
         className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(6)}
       >
-        <AiOutlineCreditCard size={20} color={active === 6 ? "red" : ""} />
+        <RiLockPasswordLine size={20} color={active === 6 ? "red" : ""} />
         <span
           className={`pl-3 ${
             active === 6 ? "text-[red]" : ""
           } 800px:block hidden`}
         >
-          Payment Method
+          Change Password
         </span>
       </div>
 
@@ -136,9 +128,29 @@ const ProfileSideBar = ({ setActive, active }) => {
         </span>
       </div>
 
+      {user && user?.role === "Admin" && (
+        <Link to="/admin/dashboard">
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(8)}
+          >
+            <MdOutlineAdminPanelSettings
+              size={20}
+              color={active === 7 ? "red" : ""}
+            />
+            <span
+              className={`pl-3 ${
+                active === 8 ? "text-[red]" : ""
+              } 800px:block hidden`}
+            >
+              Admin Dashboard
+            </span>
+          </div>
+        </Link>
+      )}
       <div
-        className="flex items-center cursor-pointer w-full mb-6"
-        onClick={() => setActive(8) || logoutHandler()}
+        className="single_item flex items-center cursor-pointer w-full mb-8"
+        onClick={logoutHandler}
       >
         <AiOutlineLogin size={20} color={active === 8 ? "red" : ""} />
         <span
@@ -153,4 +165,4 @@ const ProfileSideBar = ({ setActive, active }) => {
   );
 };
 
-export default ProfileSideBar;
+export default ProfileSidebar;
