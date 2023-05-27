@@ -14,6 +14,8 @@ import {
   ShopCreatePage,
   SellerActivationPage,
   ShopLoginPage,
+  CheckoutPage,
+  PaymentPage
 } from "./Routes.js";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
@@ -30,7 +32,7 @@ import {
   ShopCreateEvents,
   ShopAllEvents,
   ShopAllCoupouns,
-  ShopPreviewPage
+  ShopPreviewPage,
 } from "./ProtecetedRoutes/ShopRoutes.js";
 import { getAllProducts } from "./Redux/Action/product.js";
 import { getAllEvents } from "./Redux/Action/event.js";
@@ -40,11 +42,21 @@ const App = () => {
     Store.dispatch(loadUser());
     Store.dispatch(loadSeller());
     Store.dispatch(getAllProducts());
-    Store.dispatch(getAllEvents())
+    Store.dispatch(getAllEvents());
   }, []);
   return (
     <>
       <BrowserRouter>
+        <Routes>
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <PaymentPage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -66,7 +78,14 @@ const App = () => {
           <Route path="/shop-create" element={<ShopCreatePage />} />
           <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
           <Route path="/shop-login" element={<ShopLoginPage />} />
-
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/shop/:id"
             element={
