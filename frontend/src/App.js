@@ -23,12 +23,24 @@ import { loadSeller, loadUser } from "./Redux/Action/user.js";
 import ProtectedRoute from "./ProtecetedRoutes/ProtectedRoute.js";
 import { ShopHomePage } from "./ShopHomePage.js";
 import SellerProtectedRoute from "./ProtecetedRoutes/SellerProtectedRoutes.js";
-import { ShopDashboardPage } from "./ProtecetedRoutes/ShopRoutes.js";
+import {
+  ShopDashboardPage,
+  ShopCreateProduct,
+  ShopAllProducts,
+  ShopCreateEvents,
+  ShopAllEvents,
+  ShopAllCoupouns,
+  ShopPreviewPage
+} from "./ProtecetedRoutes/ShopRoutes.js";
+import { getAllProducts } from "./Redux/Action/product.js";
+import { getAllEvents } from "./Redux/Action/event.js";
 
 const App = () => {
   useEffect(() => {
     Store.dispatch(loadUser());
     Store.dispatch(loadSeller());
+    Store.dispatch(getAllProducts());
+    Store.dispatch(getAllEvents())
   }, []);
   return (
     <>
@@ -49,10 +61,10 @@ const App = () => {
           <Route path="/best-selling" element={<BestSellingPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/faq" element={<FAQPage />} />
-          <Route path="/product/:name" element={<ProductsDetailsPage />} />
+          <Route path="/product/:_id" element={<ProductsDetailsPage />} />
 
           <Route path="/shop-create" element={<ShopCreatePage />} />
-
+          <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
           <Route path="/shop-login" element={<ShopLoginPage />} />
 
           <Route
@@ -68,7 +80,49 @@ const App = () => {
             path="/dashboard"
             element={
               <SellerProtectedRoute>
-                <ShopDashboardPage/>
+                <ShopDashboardPage />
+              </SellerProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard-create-product"
+            element={
+              <SellerProtectedRoute>
+                <ShopCreateProduct />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard-product"
+            element={
+              <SellerProtectedRoute>
+                <ShopAllProducts />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard-create-event"
+            element={
+              <SellerProtectedRoute>
+                <ShopCreateEvents />
+              </SellerProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard-events"
+            element={
+              <SellerProtectedRoute>
+                <ShopAllEvents />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard-coupouns"
+            element={
+              <SellerProtectedRoute>
+                <ShopAllCoupouns />
               </SellerProtectedRoute>
             }
           />

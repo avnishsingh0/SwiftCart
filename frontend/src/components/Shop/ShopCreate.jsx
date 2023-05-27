@@ -168,6 +168,7 @@ const ShopCreate = () => {
               </label>
               <div className="mt-1 relative">
                 <input
+                  placeholder="Enter at least 6 digit character"
                   type={visible ? "text" : "password"}
                   name="password"
                   autoComplete="current-password"

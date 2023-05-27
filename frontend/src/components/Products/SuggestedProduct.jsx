@@ -6,10 +6,10 @@ import ProductCard from "../Route/ProductCard/ProductCard";
 
 const SuggestedProduct = ({ data }) => {
   const [products, setProducts] = useState();
-
+  const {allProducts}= useSelector((state)=>state.products)
   useEffect(() => {
     const d =
-      productData && productData.filter((i) => i.category === data.category);
+    allProducts && allProducts.filter((i) => i.category === data.category);
     setProducts(d);
   }, []);
 
