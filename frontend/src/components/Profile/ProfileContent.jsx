@@ -473,6 +473,7 @@ const ChangePassword = () => {
         setOldPassword("");
         setNewPassword("");
         setConfirmPassword("");
+        toast.success("Password updated successfully!")
       })
       .catch((error) => {
         toast.error(error.response.data.message);
