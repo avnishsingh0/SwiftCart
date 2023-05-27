@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "../../styles/styles";
 import {
   AiFillHeart,
@@ -8,13 +8,20 @@ import {
   AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { backend_url } from "../../server";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProductsShop } from "../../Redux/Action/product";
 
 const ProductDetails = ({ data }) => {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const {allProducts}= useSelector((state)=>state.products)
+  useEffect(() => {
+    dispatch(getAllProductsShop(data && data?.shop._id));
+    
+  }, [dispatch]);
   const incrementCount = () => {
     setCount(count + 1);
   };
@@ -33,7 +40,7 @@ const ProductDetails = ({ data }) => {
             <div className="block w-full 800px:flex">
               <div className="w-full 800px:w-[50%]">
                 <img
-                  src={data.image_Url[select].url}
+                  src={`${backend_url}${data && data.images[0]}`}
                   alt=""
                   className="w-[80%]"
                 />
@@ -44,7 +51,7 @@ const ProductDetails = ({ data }) => {
                     } cursor-pointer`}
                   >
                     <img
-                      src={data?.image_Url[0].url}
+                      src={`${backend_url}${data && data.images[1]}`}
                       alt=""
                       className="h-[200px] "
                       onClick={() => setSelect(0)}
@@ -56,7 +63,7 @@ const ProductDetails = ({ data }) => {
                     } cursor-pointer`}
                   >
                     <img
-                      src={data?.image_Url[1].url}
+                      src={`${backend_url}${data && data.images[2]}`}
                       alt=""
                       className="h-[200px] "
                       onClick={() => setSelect(1)}
@@ -71,10 +78,10 @@ const ProductDetails = ({ data }) => {
 
                 <div className="flex pt-3">
                   <h4 className={`${styles.productDiscountPrice}`}>
-                    {data.discount_price}$
+                    {data.discountPrice}$
                   </h4>
                   <h3 className={`${styles.price}`}>
-                    {data.price ? data.price + "$" : null}
+                    {data.originalPrice ? data.originalPrice + "$" : null}
                   </h3>
                 </div>
 
@@ -130,7 +137,7 @@ const ProductDetails = ({ data }) => {
                 <div className="flex items-center pt-8">
                   <Link to={`/shop/preview/${data?.shop._id}`}>
                     <img
-                      src={data.shop.shop_avatar.url}
+                       src={`${backend_url}${data?.shop?.avatar}`}
                       alt=""
                       className="w-[50px] h-[50px] rounded-full mr-2"
                     />
@@ -159,7 +166,7 @@ const ProductDetails = ({ data }) => {
             </div>
           </div>
 
-          <ProductDetailsInfo data={data} />
+          <ProductDetailsInfo data={data} allProducts={allProducts} />
           <br />
           <br />
         </div>
@@ -168,7 +175,7 @@ const ProductDetails = ({ data }) => {
   );
 };
 
-const ProductDetailsInfo = ({ data }) => {
+const ProductDetailsInfo = ({ data,allProducts}) => {
   const [active, setActive] = useState(1);
 
   return (
@@ -243,53 +250,47 @@ const ProductDetailsInfo = ({ data }) => {
               <Link to={`/shop/preview/${data.shop._id}`}>
                 <div className="flex items-center">
                   <img
-                    src={data.shop.shop_avatar.url}
+                     src={`${backend_url}${data?.shop?.avatar}`}
                     className="w-[50px] h-[50px] rounded-full"
                     alt=""
                   />
 
                   <div className="pl-3">
-                    <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
-                    <h5 className="pb-2 text-[15px]">
-                      ({data.shop.ratings}/5) Ratings
-                    </h5>
+                  <h5 className="pb-2 text-[15px]">
+                    ({5}/5) Ratings
+                  </h5>
                   </div>
                 </div>
               </Link>
-              <p className="pt-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-                perspiciatis voluptates magnam repellat dolorum, rem harum,
-                suscipit id, est cum dicta quam provident cupiditate sunt
-                laborum culpa at repudiandae fuga!
-              </p>
+              <p className="pt-2">{data.shop.description}</p>
             </div>
-            
+
             <div className="w-full 800px:w-[50%] mt-5 800px:mt-0 800px:flex flex-col items-end">
-            <div className="text-left">
-            <h5 className="font-[600]">
-                Joined on:
-                <span className="font-[500]">
-                  15-05-2023
-                </span>
-              </h5>
-              <h5 className="font-[600] pt-3">
-                Total Products:
-                <span className="font-[500]">
-                 1,223
-                </span>
-              </h5>
-              <h5 className="font-[600] pt-3">
-                Total Reviews:
-                <span className="font-[500]">324</span>
-              </h5>
-              <Link to="/">
-                <div
-                  className={`${styles.button} !rounded-[4px] !h-[39.5px] mt-3`}
-                >
-                  <h4 className="text-white">Visit Shop</h4>
-                </div>
-              </Link>
-            </div>
+              <div className="text-left">
+                <h5 className="font-[600]">
+                  Joined on:
+                  <span className="font-[500]">
+                  {data.shop?.createdAt?.slice(0, 10)}
+                  </span>
+                </h5>
+                <h5 className="font-[600] pt-3">
+                  Total Products:
+                  <span className="font-[500]">
+                  {allProducts && allProducts.length}
+                  </span>
+                </h5>
+                <h5 className="font-[600] pt-3">
+                  Total Reviews:
+                  <span className="font-[500]">324</span>
+                </h5>
+                <Link to="/">
+                  <div
+                    className={`${styles.button} !rounded-[4px] !h-[39.5px] mt-3`}
+                  >
+                    <h4 className="text-white">Visit Shop</h4>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
         </>
