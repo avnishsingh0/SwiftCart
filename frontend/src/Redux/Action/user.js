@@ -143,4 +143,3 @@ export const deleteUserAddress = (id) => async (dispatch) => {
   }
 };
 
-// get all users --- admin

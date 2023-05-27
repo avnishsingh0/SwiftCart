@@ -60,7 +60,6 @@ export const userReducer = createReducer(initialState, {
     state.error = action.payload;
   },
 
-  
   clearMessages: (state) => {
     state.successMessage = null;
   },
