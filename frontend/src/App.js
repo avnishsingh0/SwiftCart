@@ -15,7 +15,11 @@ import {
   SellerActivationPage,
   ShopLoginPage,
   CheckoutPage,
-  PaymentPage
+  PaymentPage,
+  OrderSuccessPage,
+  OrderDetailsPage,
+  TrackOrderPage
+
 } from "./Routes.js";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
@@ -33,6 +37,9 @@ import {
   ShopAllEvents,
   ShopAllCoupouns,
   ShopPreviewPage,
+  ShopAllOrders,
+  ShopOrderDetails,
+  ShopAllRefunds
 } from "./ProtecetedRoutes/ShopRoutes.js";
 import { getAllProducts } from "./Redux/Action/product.js";
 import { getAllEvents } from "./Redux/Action/event.js";
@@ -102,6 +109,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+           <Route path="/order/success" element={<OrderSuccessPage />} />
           <Route
             path="/shop/:id"
             element={
@@ -133,6 +141,22 @@ const App = () => {
             element={
               <SellerProtectedRoute>
                 <ShopAllProducts />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard-orders"
+            element={
+              <SellerProtectedRoute>
+                <ShopAllOrders/>
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/order/:id"
+            element={
+              <SellerProtectedRoute>
+                <ShopOrderDetails/>
               </SellerProtectedRoute>
             }
           />
@@ -170,7 +194,33 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/user/order/:id"
+            element={
+              <ProtectedRoute>
+                <OrderDetailsPage />
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/user/track/order/:id"
+            element={
+              <ProtectedRoute>
+                <TrackOrderPage />
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/dashboard-refunds"
+            element={
+              <ProtectedRoute>
+                <ShopAllRefunds />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
+
+        
         <ToastContainer
           position="bottom-center"
           autoClose={5000}
