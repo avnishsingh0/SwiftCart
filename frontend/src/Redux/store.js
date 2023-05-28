@@ -5,6 +5,7 @@ import { productReducer } from "./Reducer/product";
 import { eventReducer } from "./Reducer/event";
 import { wishlistReducer } from "./Reducer/wishlist";
 import { cartReducer } from "./Reducer/cart";
+import { orderReducer } from "./Reducer/order";
 
 const Store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ const Store = configureStore({
         events:eventReducer,
         wishlist: wishlistReducer,
         cart: cartReducer,
+        order:orderReducer
     },
     // devTools: process.env.NODE_ENV !== "production",
   });
