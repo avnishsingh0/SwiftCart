@@ -39,7 +39,8 @@ import {
   ShopPreviewPage,
   ShopAllOrders,
   ShopOrderDetails,
-  ShopAllRefunds
+  ShopAllRefunds,
+  ShopSettingsPage
 } from "./ProtecetedRoutes/ShopRoutes.js";
 import { getAllProducts } from "./Redux/Action/product.js";
 import { getAllEvents } from "./Redux/Action/event.js";
@@ -215,6 +216,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <ShopAllRefunds />
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <ShopSettingsPage />
               </ProtectedRoute>
             }
           />
