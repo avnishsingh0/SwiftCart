@@ -9,6 +9,8 @@ import ShopAllOrders from "../pages/Shop/ShopAllOrders.jsx"
 import ShopOrderDetails from "../pages/Shop/ShopOrderDetails.jsx"
 import ShopAllRefunds from "../pages/Shop/ShopAllRefunds.jsx"
 import ShopSettingsPage from "../pages/Shop/ShopSettingsPage.jsx"
+import ShopWithDrawMoneyPage from "../pages/Shop/ShopWithDrawMoneyPage.jsx"
+import ShopInboxPage from "../pages/Shop/ShopInboxPage.jsx"
 
 export {
     ShopDashboardPage,
@@ -21,5 +23,7 @@ export {
     ShopAllOrders,
     ShopOrderDetails,
     ShopAllRefunds,
-    ShopSettingsPage
+    ShopSettingsPage,
+    ShopWithDrawMoneyPage,
+    ShopInboxPage
 }
