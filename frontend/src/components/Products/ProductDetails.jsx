@@ -256,7 +256,7 @@ const ProductDetailsInfo = ({
   averageRating,
 }) => {
   const [active, setActive] = useState(1);
-
+console.log(data)
   return (
     <div className="bg-[#f5f6fb] px-3 800px:px-10 py-2 rounded">
       <div className="w-full flex justify-between border-b pt-10 pb-2">
@@ -308,33 +308,31 @@ const ProductDetailsInfo = ({
         </>
       ) : null}
 
-      {active === 2 ? (
-        <div className="w-full min-h-[40vh] flex flex-col items-center py-3 overflow-y-scroll">
-          {data &&
-            data.reviews.map((item, index) => (
-              <div className="w-full flex my-2">
-                <img
-                  src={`${backend_url}/${item.user.avatar}`}
-                  alt=""
-                  className="w-[50px] h-[50px] rounded-full"
-                />
-                <div className="pl-2 ">
-                  <div className="w-full flex items-center">
-                    <h1 className="font-[500] mr-3">{item.user.name}</h1>
-                    <Ratings rating={data?.ratings} />
-                  </div>
-                  <p>{item.comment}</p>
-                </div>
-              </div>
-            ))}
-
-          <div className="w-full flex justify-center">
-            {data && data.reviews.length === 0 && (
-              <h5>No Reviews have for this product!</h5>
-            )}
+      {active === 2 && data && data.reviews ? (
+  <div className="w-full min-h-[40vh] flex flex-col items-center py-3 overflow-y-scroll">
+    {data.reviews.length > 0 ? (
+      data.reviews.map((item, index) => (
+        <div className="w-full flex my-2" key={index}>
+          <img
+            src={`${backend_url}/${item.user.avatar}`}
+            alt=""
+            className="w-[50px] h-[50px] rounded-full"
+          />
+          <div className="pl-2">
+            <div className="w-full flex items-center">
+              <h1 className="font-[500] mr-3">{item.user.name}</h1>
+              <Ratings rating={data?.ratings} />
+            </div>
+            <p>{item.comment}</p>
           </div>
         </div>
-      ) : null}
+      ))
+    ) : (
+      <h5>No reviews available for this product.</h5>
+    )}
+  </div>
+) : null}
+
 
       {active === 3 && (
         <div className="w-full block 800px:flex p-5">
