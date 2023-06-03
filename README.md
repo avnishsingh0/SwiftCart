@@ -316,14 +316,6 @@
 <table>
   <tr>
     <td>
-      <img src="https://i.imgur.com/BEoFalT.png" alt="Product-list">
-    </td>
-    <td>
-      <img src="https://i.imgur.com/3bVm0gM.png" alt="Product-register">
-    </td>
-  </tr>
-  <tr>
-    <td>
       <img src="https://i.imgur.com/YVddv9T.png" alt="Product-edit">
     </td>
      <td>
@@ -361,7 +353,7 @@
 ## Footer :
 
 <div align="center">
- <img width="80%" src="https://i.imgur.com/JNsYNwa.png" alt="Footer">
+ <img width="80%" src="https://i.imgur.com/ctOGTBD.png" alt="Footer">
 </div>
 <br/>
 <br/>
@@ -369,8 +361,9 @@
  # Languages Used :
 
 <ul dir="auto">
- <ol dir="auto">◉ JavaScript : 98.4%</ol>
- <ol dir="auto">◉ Others : 1.6%</ol>
+ <ol dir="auto">◉ React : 58.0%</ol>
+	<ol dir="auto">◉ React : 40.4%</ol>
+ <ol dir="auto">◉ Others : 2.6%</ol>
  </ul>
  
 ### This report is provided by the Github language used stats. So, this is the total percentage of the coding languages.
@@ -391,50 +384,28 @@
 
 <br/><br/>
  
-# Our Team :
 
- <ul>
-	<li><a href="https://github.com/souravpl8092">Avnish Kumar (Team Lead)</a></li>
-        <li><a href="https://github.com/raveenakale475">Ayushi Vashisth (Team Member)</a></li>
-        <li><a href="https://github.com/govind-kumarr">Vivek Agrawal (Team Member)</a> </li>
-        <li><a href="https://github.com/Devendra0192">Bhuvan Jangra (Team Member)</a></li>
-  </ul>
 
-### This is a collaborative project built by a team of 4 fullstack web developers and executed in 5 days.
+### This is a individual project built by a  in 30 days.
 
 <br/><br/>
 
-# Team Work Efforts :
 
-First of all, we created a Slack and zoom group to establish communication between all the team members. 
-Then we connected over zoom meet for further discussion about assigned project.
-
-In a zoom meet we divideed small parts of project to all the team-member.
-
-We discussed about past days work and present day work, if any one face issue all the team member helps to solve the problem.
-
-All push the data in Git-hub to their respective branch and merge them to main branch.
-
-Finally we make the presentation of the project.
-<br/><br/>
 
 # Our Learnings : 
 On this journey we faced many issues, but we keep motivated each other with patience. 
 
-- We all learned how to read and understand the code of other team members.
 
 - We learned how to write more efficient and clean code.
 
 - Even though  We also learned how to plan a project and how to execute it step by step.
-
-- By this Project we have learned how to collaborate and communicate with team effectively and improving the productivity.
 
 - We also got a glimpse of using GitHub for the version control.
 <br/><br/>
 
 # Contributing
 
-### We welcome contributions to the Lenskart Clone website. If you have an idea for a new feature or have found a bug, please open an issue in the repository.
+### We welcome contributions to the shopO website. If you have an idea for a new feature or have found a bug, please open an issue in the repository.
 
 <br/>
 
