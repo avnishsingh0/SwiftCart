@@ -1,6 +1,6 @@
-<h1 align="center">✨✨Welcome to ShopO✨✨</h1>
+<h1 align="center">✨✨Welcome to SwiftCart✨✨</h1>
 
-<h3 align="center">💻Project Unique Name : ShopO ✈️</h3>
+<h3 align="center">💻Project Unique Name : SwiftCart ✈️</h3>
 
 <br/>
 <h3 align="justify" width="80%">This website provides a seamless shopping experience for customers. Users can browse through various products, add items to their cart, and proceed to checkout. Integration with a payment gateway ensures secure and convenient online transactions. Additionally, a chat feature is implemented to enable real-time communication between users and vendors for queries or assistance.</h3>
