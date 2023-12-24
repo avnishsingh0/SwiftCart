@@ -1,15 +1,19 @@
+import React, { useRef, useState, useEffect } from "react";
+
+// third party
 import axios from "axios";
-import React, { useRef, useState } from "react";
-import { useEffect } from "react";
-import { backend_url, server } from "../../server";
-import { useDispatch, useSelector } from "react-redux";
+import socketIO from "socket.io-client";
+import { useSelector } from "react-redux";
+import { TfiGallery } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
+
+// internal imports
 import styles from "../../styles/styles";
-import { TfiGallery } from "react-icons/tfi";
-import socketIO from "socket.io-client";
-import { format } from "timeago.js";
-const ENDPOINT = "https://vernderappchatting-production.up.railway.app/";
+import { backend_url, server } from "../../server";
+
+// end points
+const ENDPOINT = "http://localhost:4000";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const DashboardMessages = () => {
@@ -22,7 +26,7 @@ const DashboardMessages = () => {
   const [newMessage, setNewMessage] = useState("");
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [activeStatus, setActiveStatus] = useState(false);
-  const [images, setImages] = useState();
+  const [, setImages] = useState();
   const [open, setOpen] = useState(false);
   const scrollRef = useRef(null);
 
@@ -54,7 +58,6 @@ const DashboardMessages = () => {
 
         setConversations(resonse.data.conversations);
       } catch (error) {
-        // console.log(error);
       }
     };
     getConversation();
@@ -175,7 +178,7 @@ const DashboardMessages = () => {
 
     try {
       await axios
-        .post(`${server}/message/create-new-message`, formData,{
+        .post(`${server}/message/create-new-message`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -269,7 +272,7 @@ const MessageList = ({
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const userId = data.members.find((user) => user != me);
+    const userId = data.members.find((user) => user !== me);
 
     const getUser = async () => {
       try {
@@ -358,53 +361,49 @@ const SellerInbox = ({
       <div className="px-3 h-[65vh] py-3 overflow-y-scroll">
         {messages &&
           messages.map((item, index) => {
-             return (
+            return (
               <div
-              className={`flex w-full my-2 ${
-                item.sender === sellerId ? "justify-end" : "justify-start"
-              }`}
-              ref={scrollRef}
-            >
-              {item.sender !== sellerId && (
-                <img
-                  src={`${backend_url}${userData?.avatar}`}
-                  className="w-[40px] h-[40px] rounded-full mr-3"
-                  alt=""
-                />
-              )}
-              {
-                item.images && (
+                className={`flex w-full my-2 ${
+                  item.sender === sellerId ? "justify-end" : "justify-start"
+                }`}
+                ref={scrollRef}
+              >
+                {item.sender !== sellerId && (
                   <img
-                     src={`${backend_url}${item.images}`}
-                     className="w-[300px] h-[300px] object-cover rounded-[10px] mr-2"
+                    src={`${backend_url}${userData?.avatar}`}
+                    className="w-[40px] h-[40px] rounded-full mr-3"
+                    alt=""
                   />
-                )
-              }
-             {
-              item.text !== "" && (
-                <div>
-                <div
-                  className={`w-max p-2 rounded ${
-                    item.sender === sellerId ? "bg-[#000]" : "bg-[#38c776]"
-                  } text-[#fff] h-min`}
-                >
-                  <p>{item.text}</p>
-                </div>
+                )}
+                {item.images && (
+                  <img
+                    src={`${backend_url}${item.images}`}
+                    className="w-[300px] h-[300px] object-cover rounded-[10px] mr-2"
+                    alt="item-img"
+                  />
+                )}
+                {item.text !== "" && (
+                  <div>
+                    <div
+                      className={`w-max p-2 rounded ${
+                        item.sender === sellerId ? "bg-[#000]" : "bg-[#38c776]"
+                      } text-[#fff] h-min`}
+                    >
+                      <p>{item.text}</p>
+                    </div>
 
-                <p className="text-[12px] text-[#000000d3] pt-1">
-                  {/* {format(item.createdAt)} */}
-                </p>
+                    <p className="text-[12px] text-[#000000d3] pt-1">
+                      {/* {format(item.createdAt)} */}
+                    </p>
+                  </div>
+                )}
               </div>
-              )
-             }
-            </div>
-             )
-      })}
+            );
+          })}
       </div>
 
       {/* send message input */}
       <form
-        aria-required={true}
         className="p-3 relative w-full flex justify-between items-center"
         onSubmit={sendMessageHandler}
       >

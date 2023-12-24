@@ -1,28 +1,34 @@
-import React, { useState } from "react";
-import {
-  AiOutlineArrowRight,
-  AiOutlineCamera,
-  AiOutlineDelete,
-} from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { backend_url, server } from "../../server";
+import React, { useState, useEffect } from "react";
+
+// internal imports
 import styles from "../../styles/styles";
-import { DataGrid } from "@material-ui/data-grid";
-import { Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { MdTrackChanges } from "react-icons/md";
-import { RxCross1 } from "react-icons/rx";
+import { backend_url, server } from "../../server";
+import { getAllOrdersOfUser } from "../../Redux/Action/order";
 import {
   deleteUserAddress,
   loadUser,
   updatUserAddress,
   updateUserInformation,
 } from "../../Redux/Action/user";
-import { Country, State } from "country-state-city";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
+
+// third party
 import axios from "axios";
-import { getAllOrdersOfUser } from "../../Redux/Action/order";
+import { toast } from "react-toastify";
+
+import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { DataGrid } from "@material-ui/data-grid";
+import { Country, State } from "country-state-city";
+import { useDispatch, useSelector } from "react-redux";
+
+// react-icons
+import { RxCross1 } from "react-icons/rx";
+import { MdTrackChanges } from "react-icons/md";
+import {
+  AiOutlineArrowRight,
+  AiOutlineCamera,
+  AiOutlineDelete,
+} from "react-icons/ai";
 
 const ProfileContent = ({ active }) => {
   const { user, error, successMessage } = useSelector((state) => state.user);
@@ -30,7 +36,7 @@ const ProfileContent = ({ active }) => {
   const [email, setEmail] = useState(user && user.email);
   const [phoneNumber, setPhoneNumber] = useState(user && user.phoneNumber);
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState(null);
+  const [, setAvatar] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,7 +48,7 @@ const ProfileContent = ({ active }) => {
       toast.success(successMessage);
       dispatch({ type: "clearMessages" });
     }
-  }, [error, successMessage]);
+  }, [dispatch, error, successMessage]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,8 +71,8 @@ const ProfileContent = ({ active }) => {
         withCredentials: true,
       })
       .then((response) => {
-         dispatch(loadUser());
-         toast.success("avatar updated successfully!");
+        dispatch(loadUser());
+        toast.success("avatar updated successfully!");
       })
       .catch((error) => {
         toast.error(error);
@@ -101,7 +107,7 @@ const ProfileContent = ({ active }) => {
           <br />
           <br />
           <div className="w-full px-5">
-            <form onSubmit={handleSubmit} aria-required={true}>
+            <form onSubmit={handleSubmit}>
               <div className="w-full 800px:flex block pb-3">
                 <div className=" w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Full Name</label>
@@ -204,7 +210,7 @@ const AllOrders = () => {
 
   useEffect(() => {
     dispatch(getAllOrdersOfUser(user._id));
-  }, []);
+  }, [dispatch, user._id]);
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
@@ -289,9 +295,10 @@ const AllRefundOrders = () => {
 
   useEffect(() => {
     dispatch(getAllOrdersOfUser(user._id));
-  }, []);
+  }, [dispatch, user._id]);
 
-  const eligibleOrders = orders && orders.filter((item) => item.status === "Processing refund");
+  const eligibleOrders =
+    orders && orders.filter((item) => item.status === "Processing refund");
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
@@ -334,9 +341,9 @@ const AllRefundOrders = () => {
         return (
           <>
             <Link to={`/user/order/${params.id}`}>
-              <Button>
+              {/* <Button>
                 <AiOutlineArrowRight size={20} />
-              </Button>
+              </Button> */}
             </Link>
           </>
         );
@@ -347,7 +354,7 @@ const AllRefundOrders = () => {
   const row = [];
 
   eligibleOrders &&
-   eligibleOrders.forEach((item) => {
+    eligibleOrders.forEach((item) => {
       row.push({
         id: item._id,
         itemsQty: item.cart.length,
@@ -376,7 +383,7 @@ const TrackOrder = () => {
 
   useEffect(() => {
     dispatch(getAllOrdersOfUser(user._id));
-  }, []);
+  }, [dispatch, user._id]);
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
@@ -473,7 +480,7 @@ const ChangePassword = () => {
         setOldPassword("");
         setNewPassword("");
         setConfirmPassword("");
-        toast.success("Password updated successfully!")
+        toast.success("Password updated successfully!");
       })
       .catch((error) => {
         toast.error(error.response.data.message);
@@ -486,7 +493,6 @@ const ChangePassword = () => {
       </h1>
       <div className="w-full">
         <form
-          aria-required
           onSubmit={passwordChangeHandler}
           className="flex flex-col items-center"
         >
@@ -602,7 +608,7 @@ const Address = () => {
               Add New Address
             </h1>
             <div className="w-full">
-              <form aria-required onSubmit={handleSubmit} className="w-full">
+              <form onSubmit={handleSubmit} className="w-full">
                 <div className="w-full block p-4">
                   <div className="w-full pb-2">
                     <label className="block pb-2">Country</label>

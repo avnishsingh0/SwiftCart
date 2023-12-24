@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+// internal imports
+import "./App.css";
+import { server } from "./server.js";
+import Store from "./Redux/store.js";
+import { ShopHomePage } from "./ShopHomePage.js";
+import { getAllEvents } from "./Redux/Action/event.js";
+import { getAllProducts } from "./Redux/Action/product.js";
 import {
   LoginPage,
   SignupPage,
@@ -19,15 +26,10 @@ import {
   OrderSuccessPage,
   OrderDetailsPage,
   TrackOrderPage,
-  UserInbox
+  UserInbox,
 } from "./Routes.js";
-import "./App.css";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Store from "./Redux/store.js";
 import { loadSeller, loadUser } from "./Redux/Action/user.js";
 import ProtectedRoute from "./ProtecetedRoutes/ProtectedRoute.js";
-import { ShopHomePage } from "./ShopHomePage.js";
 import SellerProtectedRoute from "./ProtecetedRoutes/SellerProtectedRoutes.js";
 import {
   ShopDashboardPage,
@@ -42,14 +44,17 @@ import {
   ShopAllRefunds,
   ShopSettingsPage,
   ShopWithDrawMoneyPage,
-  ShopInboxPage
+  ShopInboxPage,
 } from "./ProtecetedRoutes/ShopRoutes.js";
-import { getAllProducts } from "./Redux/Action/product.js";
-import { getAllEvents } from "./Redux/Action/event.js";
-import { server } from "./server.js";
+
+// third party
 import axios from "axios";
-import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { Elements } from "@stripe/react-stripe-js";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
 
@@ -65,7 +70,6 @@ const App = () => {
     Store.dispatch(getAllEvents());
     getStripeApikey();
   }, []);
-  console.log(stripeApikey);
   return (
     <>
       <BrowserRouter>
@@ -197,7 +201,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-           <Route
+          <Route
             path="/inbox"
             element={
               <ProtectedRoute>
@@ -245,7 +249,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-         <Route
+          <Route
             path="/dashboard-messages"
             element={
               <SellerProtectedRoute>
@@ -253,8 +257,6 @@ const App = () => {
               </SellerProtectedRoute>
             }
           />
-
-
         </Routes>
 
         <ToastContainer
@@ -266,7 +268,7 @@ const App = () => {
           rtl={false}
           pauseOnFocusLoss
           draggable
-          pauseOnHover
+          pauseOnHover  
           theme="dark"
         />
       </BrowserRouter>

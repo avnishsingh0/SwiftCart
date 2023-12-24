@@ -1,5 +1,9 @@
 import React from "react";
+
+// third party
 import Lottie from "react-lottie";
+
+// internal imports
 import animationData from "../../assets/lotties_animaitons/24151-ecommerce-animation.json";
 
 const Loader = () => {

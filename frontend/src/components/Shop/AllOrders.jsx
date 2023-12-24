@@ -1,11 +1,15 @@
+import React, { useEffect } from "react";
+
+// third party
+import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import React, { useEffect } from "react";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
+// internal imports
 import Loader from "../Layout/Loader";
 import { getAllOrdersOfShop } from "../../Redux/Action/order";
-import { AiOutlineArrowRight } from "react-icons/ai";
 
 const AllOrders = () => {
   const { orders, isLoading } = useSelector((state) => state.order);
@@ -15,7 +19,7 @@ const AllOrders = () => {
 
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller._id]);
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },

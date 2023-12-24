@@ -1,7 +1,10 @@
+import React, { useState, useEffect } from "react";
+
+// third party
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useState } from "react";
 import { useParams } from "react-router-dom";
+
+// internal imports
 import { server } from "../server";
 
 const ActivationPage = () => {
@@ -24,7 +27,7 @@ const ActivationPage = () => {
       };
       sendRequest();
     }
-  }, []);
+  }, [activation_token]);
 
   return (
     <div

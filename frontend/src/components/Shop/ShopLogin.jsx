@@ -1,10 +1,14 @@
-import { React, useEffect, useState } from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import styles from "../../styles/styles";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { React, useState } from "react";
+
+// internal imports
 import { server } from "../../server";
+import styles from "../../styles/styles";
+
+// third party
+import axios from "axios";
 import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const ShopLogin = () => {
   const navigate = useNavigate();
@@ -26,8 +30,8 @@ const ShopLogin = () => {
       )
       .then((res) => {
         toast.success("Login Success!");
-        navigate("/dashboard")
-        window.location.reload(true); 
+        navigate("/dashboard");
+        window.location.reload(true);
       })
       .catch((err) => {
         toast.error(err.response.data.message);

@@ -1,13 +1,20 @@
 import React, { useState } from "react";
-import { RxCross1 } from "react-icons/rx";
-import { IoBagHandleOutline } from "react-icons/io5";
-import { HiOutlineMinus, HiPlus } from "react-icons/hi";
+
+// internal imports
 import styles from "../../styles/styles";
-import { Link } from "react-router-dom";
 import { backend_url } from "../../server";
-import { useDispatch, useSelector } from "react-redux";
 import { addTocart, removeFromCart } from "../../Redux/Action/cart";
+
+// third party library
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+// react icons
+import { RxCross1 } from "react-icons/rx";
+import { FaCartArrowDown } from "react-icons/fa";
+import { HiOutlineMinus, HiPlus } from "react-icons/hi";
+import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 
 const Cart = ({ setOpenCart }) => {
   const { cart } = useSelector((state) => state.cart);
@@ -27,23 +34,23 @@ const Cart = ({ setOpenCart }) => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
-      <div className="fixed top-0 right-0 h-full w-[80%] 800px:w-[25%] bg-white flex flex-col overflow-y-scroll justify-between shadow-sm">
+    <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10 ">
+      <div className="fixed top-0 right-0 h-full w-full sm:w-1/2 lg:w-1/4 bg-white flex flex-col overflow-y-scroll justify-between shadow-sm hide-scrollbar">
         {cart && cart.length === 0 ? (
-          <div className="w-full h-screen flex items-center justify-center">
-            <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
-               <RxCross1 
+          <div className="flex items-center justify-center h-screen">
+            <div className="fixed top-3 right-3">
+              <RxCross1
                 size={25}
                 className="cursor-pointer"
                 onClick={() => setOpenCart(false)}
-                />
+              />
             </div>
-            <h5>Cart Items is empty!</h5>
+            <h5>Cart Items are empty!</h5>
           </div>
         ) : (
           <>
             <div>
-              <div className="flex w-full justify-end pt-5 pr-5">
+              <div className="flex justify-end pt-5 pr-5">
                 <RxCross1
                   size={25}
                   className="cursor-pointer"
@@ -51,19 +58,20 @@ const Cart = ({ setOpenCart }) => {
                 />
               </div>
               {/* Item length */}
-              <div className={`${styles.noramlFlex} p-4`}>
-                <IoBagHandleOutline size={25} />
-                <h5 className="pl-2 text-[20px] font-[500]">{cart && cart.length} items</h5>
+              <div className="flex items-center p-4">
+                <FaCartArrowDown size={20} />
+                <h5 className="pl-2 text-xl font-semibold">
+                  {cart && cart.length} items in your cart
+                </h5>
               </div>
 
               {/* cart Single Items */}
-              <br />
-              <div className="w-full border-t">
+              <div className="border-t">
                 {cart &&
-                  cart.map((i, index) => (
+                  cart.map((item, index) => (
                     <CartSingle
                       key={index}
-                      data={i}
+                      data={item}
                       quantityChangeHandler={quantityChangeHandler}
                       removeFromCartHandler={removeFromCartHandler}
                     />
@@ -71,16 +79,15 @@ const Cart = ({ setOpenCart }) => {
               </div>
             </div>
 
-            <div className="px-5 mb-3">
+            <div className="px-5 mb-2">
               {/* checkout buttons */}
               <Link to="/checkout">
-                <div
-                  className={`h-[45px] flex items-center justify-center w-[100%] bg-[#e44343] rounded-[5px]`}
-                >
-                  <h1 className="text-[#fff] text-[18px] font-[600]">
-                    Checkout Now (USD${totalPrice})
+                <button className="relative  inline-flex items-center justify-center px-9 py-3 ml-5 text-white transition-all duration-300 ease-in-out bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:bg-red-600">
+                  <h1 className="flex items-center font-medium cursor-pointer">
+                    Checkout ₹{totalPrice}
+                    <MdOutlineShoppingCartCheckout className="ml-10  font-bold" />
                   </h1>
-                </div>
+                </button>
               </Link>
             </div>
           </>
@@ -122,28 +129,29 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
           </div>
           <span className="pl-[10px]">{data.qty}</span>
           <div
-            className="bg-[#a7abb14f] rounded-full w-[25px] h-[25px] flex items-center justify-center cursor-pointer"
+            className="bg-[#d5deea] rounded-full w-[25px] h-[25px] flex items-center justify-center cursor-pointer"
             onClick={() => decrement(data)}
           >
-            <HiOutlineMinus size={16} color="#7d879c" />
+            <HiOutlineMinus size={16} color="#23180d" />
           </div>
         </div>
         <img
           src={`${backend_url}${data?.images[0]}`}
           alt=""
-          className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
+          className="w-[80px] h-min ml-2 mr-2 rounded-[5px] object-cover"
         />
-        <div className="pl-[5px]">
-          <h1>{data.name}</h1>
-          <h4 className="font-[400] text-[15px] text-[#00000082]">
-            ${data.discountPrice} * {value}
+        <div className="pl-2">
+          <h1 className="text-[12px] font-semibold">{data.name}</h1>
+          <h4 className="font-normal text-sm text-black mt-2">
+            ₹{data.discountPrice} * {value}
           </h4>
-          <h4 className="font-[600] text-[17px] pt-[3px] text-[#d02222] font-Roboto">
-            US${totalPrice}
+          <h4 className="font-semibold text-base text-[#d02222]">
+            IN ₹{totalPrice}
           </h4>
         </div>
+
         <RxCross1
-          className="cursor-pointer"
+          className="cursor-pointer text-3xl"
           onClick={() => removeFromCartHandler(data)}
         />
       </div>

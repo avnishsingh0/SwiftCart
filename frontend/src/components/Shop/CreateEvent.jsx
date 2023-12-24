@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
+
+// third party
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+
+// internal imports
 import { categoriesData } from "../../static/data";
-import { toast } from "react-toastify";
 import { createevent } from "../../Redux/Action/event";
 
 const CreateEvent = () => {
@@ -20,27 +24,31 @@ const CreateEvent = () => {
   const [originalPrice, setOriginalPrice] = useState();
   const [discountPrice, setDiscountPrice] = useState();
   const [stock, setStock] = useState();
- const [startDate,setStartDate] = useState(null);
- const [endDate,setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
- const handleStartDateChange = (e) => {
+  const handleStartDateChange = (e) => {
     const startDate = new Date(e.target.value);
     const minEndDate = new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000);
     setStartDate(startDate);
     setEndDate(null);
-    document.getElementById("end-date").min = minEndDate.toISOString().slice(0, 10);
+    document.getElementById("end-date").min = minEndDate
+      .toISOString()
+      .slice(0, 10);
   };
 
   const handleEndDateChange = (e) => {
     const endDate = new Date(e.target.value);
     setEndDate(endDate);
   };
-   
+
   const today = new Date().toISOString().slice(0, 10);
 
   const minEndDate = startDate
-  ? new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
-  : "";
+    ? new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 10)
+    : "";
 
   useEffect(() => {
     if (error) {
@@ -51,7 +59,7 @@ const CreateEvent = () => {
       navigate("/dashboard-events");
       window.location.reload();
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, navigate, success]);
 
   const handleImageChange = (e) => {
     e.preventDefault();
@@ -59,8 +67,6 @@ const CreateEvent = () => {
     let files = Array.from(e.target.files);
     setImages((prevImages) => [...prevImages, ...files]);
   };
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -199,7 +205,7 @@ const CreateEvent = () => {
             type="date"
             name="price"
             id="start-date"
-            value={startDate ? startDate.toISOString().slice(0,10) : ""}
+            value={startDate ? startDate.toISOString().slice(0, 10) : ""}
             className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             onChange={handleStartDateChange}
             min={today}
@@ -215,7 +221,7 @@ const CreateEvent = () => {
             type="date"
             name="price"
             id="end-date"
-            value={endDate ? endDate.toISOString().slice(0,10) : ""}
+            value={endDate ? endDate.toISOString().slice(0, 10) : ""}
             className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             onChange={handleEndDateChange}
             min={minEndDate}

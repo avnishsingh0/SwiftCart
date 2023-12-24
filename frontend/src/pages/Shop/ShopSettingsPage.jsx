@@ -1,4 +1,6 @@
 import React from "react";
+
+// internal imports
 import ShopSettings from "../../components/Shop/ShopSettings";
 import DashboardHeader from "../../components/Shop/Layout/DashboardHeader";
 import DashboardSideBar from "../../components/Shop/Layout/DashboardSideBar";

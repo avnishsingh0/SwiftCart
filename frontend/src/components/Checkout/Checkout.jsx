@@ -1,12 +1,16 @@
-import React, { useState } from "react";
-import styles from "../../styles/styles";
-import { Country, State } from "country-state-city";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+
+// internal imports
 import { server } from "../../server";
+import styles from "../../styles/styles";
+
+// third party library
+import axios from "axios";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { MdPayments } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { Country, State } from "country-state-city";
 
 const Checkout = () => {
   const { user } = useSelector((state) => state.user);
@@ -27,31 +31,37 @@ const Checkout = () => {
   }, []);
 
   const paymentSubmit = () => {
-   if(address1 === "" || address2 === "" || zipCode === null || country === "" || city === ""){
-      toast.error("Please choose your delivery address!")
-   } else{
-    const shippingAddress = {
-      address1,
-      address2,
-      zipCode,
-      country,
-      city,
-    };
+    if (
+      address1 === "" ||
+      address2 === "" ||
+      zipCode === null ||
+      country === "" ||
+      city === ""
+    ) {
+      toast.error("Please choose your delivery address!");
+    } else {
+      const shippingAddress = {
+        address1,
+        address2,
+        zipCode,
+        country,
+        city,
+      };
 
-    const orderData = {
-      cart,
-      totalPrice,
-      subTotalPrice,
-      shipping,
-      discountPrice,
-      shippingAddress,
-      user,
+      const orderData = {
+        cart,
+        totalPrice,
+        subTotalPrice,
+        shipping,
+        discountPrice,
+        shippingAddress,
+        user,
+      };
+
+      // update local storage with the updated orders array
+      localStorage.setItem("latestOrder", JSON.stringify(orderData));
+      navigate("/payment");
     }
-
-    // update local storage with the updated orders array
-    localStorage.setItem("latestOrder", JSON.stringify(orderData));
-    navigate("/payment");
-   }
   };
 
   const subTotalPrice = cart.reduce(
@@ -134,12 +144,16 @@ const Checkout = () => {
           />
         </div>
       </div>
-      <div
-        className={`${styles.button} w-[150px] 800px:w-[280px] mt-10`}
+
+      <button
         onClick={paymentSubmit}
+        className="inline-flex px-4 py-2 ite text-white mt-5 transition-all duration-300 ease-in-out bg-red-600 rounded-full hover:bg-red-500 focus:outline-none focus:bg-red-600"
       >
-        <h5 className="text-white">Go to Payment</h5>
-      </div>
+        <h1 className="flex items-center font-medium cursor-pointer">
+          Go to Payment
+          <MdPayments className="ml-3" />
+        </h1>
+      </button>
     </div>
   );
 };
@@ -342,7 +356,7 @@ const CartData = ({
           required
         />
         <input
-          className={`w-full h-[40px] border border-[#f63b60] text-center text-[#f63b60] rounded-[3px] mt-8 cursor-pointer`}
+          className="relative inline-flex items-center justify-center px-12 py-2 mt-5 cursor-pointer  transition-all duration-300 ease-in-out border-2 border-red-500 rounded-full hover:bg-red-100  focus:outline-none focus:bg-red-200"
           required
           value="Apply code"
           type="submit"

@@ -1,11 +1,15 @@
+import React, { useEffect } from "react";
+
+// third party
+import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import React, { useEffect } from "react";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
+// internal imports
 import Loader from "../Layout/Loader";
 import { getAllOrdersOfShop } from "../../Redux/Action/order";
-import { AiOutlineArrowRight } from "react-icons/ai";
 
 const AllRefundOrders = () => {
   const { orders, isLoading } = useSelector((state) => state.order);
@@ -15,7 +19,7 @@ const AllRefundOrders = () => {
 
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller._id]);
 
   const refundOrders = orders && orders.filter((item) => item.status === "Processing refund"  || item.status === "Refund Success");
 

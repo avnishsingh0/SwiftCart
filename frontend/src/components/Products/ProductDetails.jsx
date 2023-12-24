@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import {
-  AiFillHeart,
-  AiOutlineHeart,
-  AiOutlineMessage,
-  AiOutlineShoppingCart,
-} from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { getAllProductsShop } from "../../Redux/Action/product";
-import { backend_url, server } from "../../server";
-import styles from "../../styles/styles";
-import {
-  addToWishlist,
-  removeFromWishlist,
-} from "../../Redux/Action/wishlist";
-import { addTocart } from "../../Redux/Action/cart";
-import { toast } from "react-toastify";
+
+// internal imports
 import Ratings from "./Ratings";
+import styles from "../../styles/styles";
+import { backend_url, server } from "../../server";
+import { addTocart } from "../../Redux/Action/cart";
+import { getAllProductsShop } from "../../Redux/Action/product";
+import { addToWishlist, removeFromWishlist } from "../../Redux/Action/wishlist";
+
+// third party
 import axios from "axios";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+// react icons
+import { FaCartPlus } from "react-icons/fa";
+import { BsMessenger } from "react-icons/bs";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const ProductDetails = ({ data }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -36,7 +36,7 @@ const ProductDetails = ({ data }) => {
     } else {
       setClick(false);
     }
-  }, [data, wishlist]);
+  }, [data, dispatch, wishlist]);
 
   const incrementCount = () => {
     setCount(count + 1);
@@ -85,10 +85,9 @@ const ProductDetails = ({ data }) => {
       0
     );
 
-  const avg =  totalRatings / totalReviewsLength || 0;
+  const avg = totalRatings / totalReviewsLength || 0;
 
   const averageRating = avg.toFixed(2);
-
 
   const handleMessageSubmit = async () => {
     if (isAuthenticated) {
@@ -118,24 +117,20 @@ const ProductDetails = ({ data }) => {
         <div className={`${styles.section} w-[90%] 800px:w-[80%]`}>
           <div className="w-full py-5">
             <div className="block w-full 800px:flex">
-              <div className="w-full 800px:w-[50%]">
+              <div className="w-full 800px:w-[50%] ">
                 <img
                   src={`${backend_url}${data && data.images[select]}`}
                   alt=""
-                  className="w-[80%]"
+                  className="w-[40%] 800px:ml-9 rounded-md"
                 />
-                <div className="w-full flex">
+                <div className="w-full flex items-center ">
                   {data &&
                     data.images.map((i, index) => (
-                      <div
-                        className={`${
-                          select === 0 ? "border" : "null"
-                        } cursor-pointer`}
-                      >
+                      <div className={``}>
                         <img
                           src={`${backend_url}${i}`}
                           alt=""
-                          className="h-[200px] overflow-hidden mr-3 mt-3"
+                          className="w-[100px] overflow-hidden mr-3 mt-3  m-[auto] items-center rounded-md"
                           onClick={() => setSelect(index)}
                         />
                       </div>
@@ -160,21 +155,21 @@ const ProductDetails = ({ data }) => {
                 </div>
 
                 <div className="flex items-center mt-12 justify-between pr-3">
-                  <div>
+                  <div className="flex items-center">
                     <button
-                      className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
+                      className="bg-red-500 hover:bg-teal-600 text-white font-bold rounded-l px-4 py-2 shadow-lg transition duration-300 ease-in-out"
                       onClick={decrementCount}
                     >
-                      -
+                      <span className="text-lg">-</span>
                     </button>
-                    <span className="bg-gray-200 text-gray-800 font-medium px-4 py-[11px]">
+                    <span className="bg-gray-200 text-gray-800 font-medium px-4 py-2">
                       {count}
                     </span>
                     <button
-                      className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
+                      className="bg-red-500 hover:bg-blue-600 text-white font-bold rounded-r px-4 py-2 shadow-lg transition duration-300 ease-in-out"
                       onClick={incrementCount}
                     >
-                      +
+                      <span className="text-lg">+</span>
                     </button>
                   </div>
                   <div>
@@ -197,23 +192,33 @@ const ProductDetails = ({ data }) => {
                     )}
                   </div>
                 </div>
-                <div
-                  className={`${styles.button} !mt-6 !rounded !h-11 flex items-center`}
-                  onClick={() => addToCartHandler(data._id)}
-                >
-                  <span className="text-white flex items-center">
-                    Add to cart <AiOutlineShoppingCart className="ml-1" />
-                  </span>
-                </div>
-                <div className="flex items-center pt-8">
+                <div className="flex flex-wrap items-center pt-8 justify-between">
+                  <button
+                    onClick={() => addToCartHandler(data._id)}
+                    className="relative inline-flex items-center justify-center px-4 py-2 mt-5 ml-[-5px] text-white transition-all duration-300 ease-in-out border-2 border-red-500 rounded-full hover:bg-red-100  focus:outline-none focus:bg-red-200"
+                  >
+                    <h1 className="flex items-center font-medium cursor-pointer text-black">
+                      Add to cart <FaCartPlus className="ml-1" />
+                    </h1>
+                  </button>
+
+                  <button
+                    onClick={handleMessageSubmit}
+                    className="relative  inline-flex mt-5 items-center justify-center px-4 py-2 text-white transition-all duration-300 ease-in-out bg-red-600 rounded-full hover:bg-red-500 focus:outline-none focus:bg-red-600"
+                  >
+                    <h1 className="flex items-center font-medium cursor-pointer">
+                      Send Message <BsMessenger className="ml-1" />
+                    </h1>
+                  </button>
+
                   <Link to={`/shop/preview/${data?.shop._id}`}>
                     <img
                       src={`${backend_url}${data?.shop?.avatar}`}
                       alt=""
-                      className="w-[50px] h-[50px] rounded-full mr-2"
+                      className="w-[50px] h-[50px] rounded-full mr-2 mt-5"
                     />
                   </Link>
-                  <div className="pr-8">
+                  <div className="pr-8 mt-5">
                     <Link to={`/shop/preview/${data?.shop._id}`}>
                       <h3 className={`${styles.shop_name} pb-1 pt-1`}>
                         {data.shop.name}
@@ -222,14 +227,6 @@ const ProductDetails = ({ data }) => {
                     <h5 className="pb-3 text-[15px]">
                       ({averageRating}/5) Ratings
                     </h5>
-                  </div>
-                  <div
-                    className={`${styles.button} bg-[#6443d1] mt-4 !rounded !h-11`}
-                    onClick={handleMessageSubmit}
-                  >
-                    <span className="text-white flex items-center">
-                      Send Message <AiOutlineMessage className="ml-1" />
-                    </span>
                   </div>
                 </div>
               </div>
@@ -256,7 +253,7 @@ const ProductDetailsInfo = ({
   averageRating,
 }) => {
   const [active, setActive] = useState(1);
-console.log(data)
+  console.log(data);
   return (
     <div className="bg-[#f5f6fb] px-3 800px:px-10 py-2 rounded">
       <div className="w-full flex justify-between border-b pt-10 pb-2">
@@ -309,30 +306,29 @@ console.log(data)
       ) : null}
 
       {active === 2 && data && data.reviews ? (
-  <div className="w-full min-h-[40vh] flex flex-col items-center py-3 overflow-y-scroll">
-    {data.reviews.length > 0 ? (
-      data.reviews.map((item, index) => (
-        <div className="w-full flex my-2" key={index}>
-          <img
-            src={`${backend_url}/${item.user.avatar}`}
-            alt=""
-            className="w-[50px] h-[50px] rounded-full"
-          />
-          <div className="pl-2">
-            <div className="w-full flex items-center">
-              <h1 className="font-[500] mr-3">{item.user.name}</h1>
-              <Ratings rating={data?.ratings} />
-            </div>
-            <p>{item.comment}</p>
-          </div>
+        <div className="w-full min-h-[40vh] flex flex-col items-center py-3 overflow-y-scroll">
+          {data.reviews.length > 0 ? (
+            data.reviews.map((item, index) => (
+              <div className="w-full flex my-2" key={index}>
+                <img
+                  src={`${backend_url}/${item.user.avatar}`}
+                  alt=""
+                  className="w-[50px] h-[50px] rounded-full"
+                />
+                <div className="pl-2">
+                  <div className="w-full flex items-center">
+                    <h1 className="font-[500] mr-3">{item.user.name}</h1>
+                    <Ratings rating={data?.ratings} />
+                  </div>
+                  <p>{item.comment}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <h5>No reviews available for this product.</h5>
+          )}
         </div>
-      ))
-    ) : (
-      <h5>No reviews available for this product.</h5>
-    )}
-  </div>
-) : null}
-
+      ) : null}
 
       {active === 3 && (
         <div className="w-full block 800px:flex p-5">

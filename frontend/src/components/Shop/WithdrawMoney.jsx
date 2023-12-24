@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllOrdersOfShop } from "../../Redux/Action/order";
-import styles from "../../styles/styles";
-import { RxCross1 } from "react-icons/rx";
-import axios from "axios";
+
+// internal imports
 import { server } from "../../server";
-import { toast } from "react-toastify";
+import styles from "../../styles/styles";
 import { loadSeller } from "../../Redux/Action/user";
+import { getAllOrdersOfShop } from "../../Redux/Action/order";
+
+// third party
+import axios from "axios";
+import { toast } from "react-toastify";
+import { RxCross1 } from "react-icons/rx";
 import { AiOutlineDelete } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 
 const WithdrawMoney = () => {
   const [open, setOpen] = useState(false);
@@ -26,7 +30,7 @@ const WithdrawMoney = () => {
 
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller._id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

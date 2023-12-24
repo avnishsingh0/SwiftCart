@@ -1,8 +1,11 @@
-import axios from "axios";
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+
+// internal imports
 import { server } from "../server";
+
+// third party
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const SellerActivationPage = () => {
   const { activation_token } = useParams();
@@ -22,9 +25,9 @@ const SellerActivationPage = () => {
             setError(true);
           });
       };
-      sendRequest(); 
+      sendRequest();
     }
-  }, []);
+  }, [activation_token]);
 
   return (
     <div

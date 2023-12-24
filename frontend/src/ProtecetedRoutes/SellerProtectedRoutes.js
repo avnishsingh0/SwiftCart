@@ -1,6 +1,10 @@
 import React from "react";
+
+// third party
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+
+// internal imports
 import Loader from "../components/Layout/Loader";
 
 const SellerProtectedRoute = ({ children }) => {

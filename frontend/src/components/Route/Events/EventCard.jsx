@@ -1,17 +1,21 @@
 import React from "react";
-import styles from "../../../styles/styles";
-import CountDown from "./CountDown.jsx"
+
+// internal imports
+import CountDown from "./CountDown.jsx";
 import { backend_url } from "../../../server";
-import { useDispatch, useSelector } from "react-redux";
+import { addTocart } from "../../../Redux/Action/cart";
+
+// third party
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { addTocart } from "../../../Redux/Action/cart";
+import { useDispatch, useSelector } from "react-redux";
+
 const EventCard = ({ active, data }) => {
-  const { cart } = useSelector((state) => state.cart);
+  const { cart } = useSelector((state) => state?.cart);
   const dispatch = useDispatch();
 
   const addToCartHandler = (data) => {
-    const isItemExists = cart && cart.find((i) => i._id === data._id);
+    const isItemExists = cart && cart?.find((i) => i?._id === data?._id);
     if (isItemExists) {
       toast.error("Item already in cart!");
     } else {
@@ -23,39 +27,50 @@ const EventCard = ({ active, data }) => {
         toast.success("Item added to cart successfully!");
       }
     }
-  }
+  };
   return (
     <div
       className={`w-full block bg-white rounded-lg ${
         active ? "unset" : "mb-12"
       } lg:flex p-2`}
     >
-      <div className="w-full lg:-w[50%] m-auto">
-        <img src={`${backend_url}${data.images[0]}`} alt="" />
+      <div className="w-full lg:w-1/2 m-auto">
+        <img
+          src={`${backend_url}${data?.images[0]}`}
+          alt=""
+          className="w-48 sm:w-64"
+        />
       </div>
-      <div className="w-full lg:[w-50%] flex flex-col justify-center">
-        <h2 className={`${styles.productTitle}`}>{data.name}</h2>
-        <p>{data.description}</p>
+      <div className="w-full lg:w-1/2 flex flex-col justify-center">
+        <h2 className="text-xl font-semibold">{data?.name}</h2>
+        <p>{data?.description}</p>
         <div className="flex py-2 justify-between">
           <div className="flex">
-            <h5 className="font-[500] text-[18px] text-[#d55b45] pr-3 line-through">
-              {data.originalPrice}$
+            <h5 className="font-semibold text-base text-gray-500 pr-3 line-through">
+              {data?.originalPrice}$
             </h5>
-            <h5 className="font-bold text-[20px] text-[#333] font-Roboto">
-              {data.discountPrice}$
+            <h5 className="font-bold text-lg text-black">
+              {data?.discountPrice}$
             </h5>
           </div>
-          <span className="pr-3 font-[400] text-[17px] text-[#44a55e]">
-            {data.sold_out} sold
+          <span className="pr-3 font-semibold text-base text-green-600">
+            {data?.sold_out} sold
           </span>
         </div>
         <CountDown data={data} />
         <br />
         <div className="flex items-center">
-          <Link to={`/product/${data._id}?isEvent=true`}>
-            <div className={`${styles.button} text-[#fff]`}>See Details</div>
+          <Link to={`/product/${data?._id}?isEvent=true`}>
+            <div className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer">
+              See Details
+            </div>
           </Link>
-          <div className={`${styles.button} text-[#fff] ml-5`} onClick={() => addToCartHandler(data)}>Add to cart</div>
+          <div
+            className="bg-red-500 text-white py-2 px-4 rounded cursor-pointer ml-5"
+            onClick={() => addToCartHandler(data)}
+          >
+            Add to Cart
+          </div>
         </div>
       </div>
     </div>

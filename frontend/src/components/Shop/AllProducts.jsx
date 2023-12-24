@@ -1,12 +1,16 @@
+import React, { useEffect } from "react";
+
+// internal imports
+import Loader from "../Layout/Loader";
+import { deleteProduct } from "../../Redux/Action/product";
+import { getAllProductsShop } from "../../Redux/Action/product";
+
+// third party
+import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import React, { useEffect } from "react";
-import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { getAllProductsShop } from "../../Redux/Action/product";
-import { deleteProduct } from "../../Redux/Action/product";
-import Loader from "../Layout/Loader";
+import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 
 const AllProducts = () => {
   const { products, isLoading } = useSelector((state) => state.products);
@@ -16,7 +20,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     dispatch(getAllProductsShop(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller._id]);
 
   const handleDelete = (id) => {
     dispatch(deleteProduct(id));
@@ -60,10 +64,9 @@ const AllProducts = () => {
       type: "number",
       sortable: false,
       renderCell: (params) => {
-        
         return (
           <>
-           <Link to={`/product/${params.id}`}>
+            <Link to={`/product/${params.id}`}>
               <Button>
                 <AiOutlineEye size={20} />
               </Button>

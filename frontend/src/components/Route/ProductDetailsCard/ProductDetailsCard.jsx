@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
-import {
-  AiFillHeart,
-  AiOutlineHeart,
-  AiOutlineMessage,
-  AiOutlineShoppingCart,
-} from "react-icons/ai";
-import { RxCross1 } from "react-icons/rx";
-import { Link } from "react-router-dom";
-import { backend_url } from "../../../server";
+
+// third party
 import styles from "../../../styles/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { backend_url } from "../../../server";
 import { addTocart } from "../../../Redux/Action/cart";
 import {
   addToWishlist,
   removeFromWishlist,
 } from "../../../Redux/Action/wishlist";
+
+// internal imports
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+// react-icons
+import { RxCross1 } from "react-icons/rx";
+import { FaCartPlus } from "react-icons/fa";
+import { BsMessenger } from "react-icons/bs";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
   const { cart } = useSelector((state) => state.cart);
@@ -23,7 +26,6 @@ const ProductDetailsCard = ({ setOpen, data }) => {
   const dispatch = useDispatch();
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
-  //   const [select, setSelect] = useState(false);
 
   const handleMessageSubmit = () => {};
 
@@ -58,7 +60,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
     } else {
       setClick(false);
     }
-  }, [wishlist]);
+  }, [data._id, wishlist]);
 
   const removeFromWishlistHandler = (data) => {
     setClick(!click);
@@ -71,87 +73,102 @@ const ProductDetailsCard = ({ setOpen, data }) => {
   };
 
   return (
-    <div className="bg-[#fff]">
+    <div className="bg-white">
       {data ? (
-        <div className="fixed w-full h-screen top-0 left-0 bg-[#00000030] z-40 flex items-center justify-center">
-          <div className="w-[90%] 800px:w-[60%] h-[90vh] overflow-y-scroll 800px:h-[75vh] bg-white rounded-md shadow-sm relative p-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-40">
+          <div className="w-3/4 md:w-2/3 h-3/4 md:h-3/4 overflow-y-scroll bg-white rounded-md shadow-lg relative p-4">
             <RxCross1
               size={30}
-              className="absolute right-3 top-3 z-50"
+              className="absolute top-3 right-3 z-50"
               onClick={() => setOpen(false)}
             />
 
-            <div className="block w-full 800px:flex">
-              <div className="w-full 800px:w-[50%]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
                 <img
                   src={`${backend_url}${data.images && data.images[0]}`}
                   alt=""
+                  className="w-full h-[20rem] object-contain rounded-md "
                 />
-                <div className="flex">
-                  <Link to={`/shop/preview/${data.shop._id}`} className="flex">
+                <div className="flex items-center justify-around flex-col md:flex-row mt-3">
+                  <Link
+                    to={`/shop/preview/${data.shop._id}`}
+                    className="flex items-center"
+                  >
                     <img
                       src={`${backend_url}${data?.shop?.avatar}`}
                       alt=""
-                      className="w-[50px] h-[50px] rounded-full mr-2"
+                      className="w-10 h-10 rounded-full mr-2"
                     />
                     <div>
-                      <h3 className={`${styles.shop_name}`}>
+                      <h3 className="text-xl font-semibold">
                         {data.shop.name}
                       </h3>
-                      <h5 className="pb-3 text-[15px]">(4.5) Ratings</h5>
+                      <h5 className="pb-3 text-sm">(4.5) Ratings</h5>
                     </div>
                   </Link>
+
+                  <button
+                    onClick={handleMessageSubmit}
+                    className="relative  inline-flex items-center justify-center px-4 py-2 text-white transition-all duration-300 ease-in-out bg-red-600 rounded-full hover:bg-red-500 focus:outline-none focus:bg-red-600"
+                  >
+                    <h1 className="flex items-center font-medium cursor-pointer">
+                      Send Message <BsMessenger className="ml-1" />
+                    </h1>
+                  </button>
                 </div>
-                <div
-                  className={`${styles.button} bg-[#000] mt-4 rounded-[4px] h-11`}
-                  onClick={handleMessageSubmit}
-                >
-                  <span className="text-[#fff] flex items-center">
-                    Send Message <AiOutlineMessage className="ml-1" />
-                  </span>
-                </div>
-                <h5 className="text-[16px] text-[red] mt-5">(50) Sold out</h5>
+
+                <h5 className="text-red-500 mt-5">(50) Sold out</h5>
               </div>
 
-              <div className="w-full 800px:w-[50%] pt-5 pl-[5px] pr-[5px]">
-                <h1 className={`${styles.productTitle} text-[20px]`}>
+              <div className="pt-5 pl-2 pr-2 md:pl-5 md:pr-5">
+                <h1
+                  className={`${styles.productTitle} text-3xl md:text-2xl font-bold mb-2`}
+                >
                   {data.name}
                 </h1>
-                <p>{data.description}</p>
+                <p className="text-gray-700 mb-4">{data.description}</p>
 
-                <div className="flex pt-3">
-                  <h4 className={`${styles.productDiscountPrice}`}>
-                    {data.discountPrice}$
+                <div className="flex items-center mb-6">
+                  <h4
+                    className={`${styles.productDiscountPrice} text-2xl font-semibold text-red-600`}
+                  >
+                    ₹{data.discountPrice}
                   </h4>
-                  <h3 className={`${styles.price}`}>
-                    {data.originalPrice ? data.originalPrice + "$" : null}
-                  </h3>
+                  {data.originalPrice && (
+                    <h3
+                      className={`${styles.price} text-gray-500 ml-4 text-base line-through`}
+                    >
+                      ₹ {data.originalPrice}
+                    </h3>
+                  )}
                 </div>
-                <div className="flex items-center mt-12 justify-between pr-3">
-                  <div>
+                <div className="flex items-center mb-8">
+                  <div className="flex items-center">
                     <button
-                      className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
+                      className="bg-red-500 hover:bg-teal-600 text-white font-bold rounded-l px-4 py-2 shadow-lg transition duration-300 ease-in-out"
                       onClick={decrementCount}
                     >
-                      -
+                      <span className="text-lg">-</span>
                     </button>
-                    <span className="bg-gray-200 text-gray-800 font-medium px-4 py-[11px]">
+                    <span className="bg-gray-200 text-gray-800 font-medium px-4 py-2">
                       {count}
                     </span>
                     <button
-                      className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
+                      className="bg-red-500 hover:bg-blue-600 text-white font-bold rounded-r px-4 py-2 shadow-lg transition duration-300 ease-in-out"
                       onClick={incrementCount}
                     >
-                      +
+                      <span className="text-lg">+</span>
                     </button>
                   </div>
-                  <div>
+
+                  <div className="ml-auto">
                     {click ? (
                       <AiFillHeart
                         size={30}
                         className="cursor-pointer"
                         onClick={() => removeFromWishlistHandler(data)}
-                        color={click ? "red" : "#333"}
+                        color="red"
                         title="Remove from wishlist"
                       />
                     ) : (
@@ -164,14 +181,15 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                     )}
                   </div>
                 </div>
-                <div
-                  className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center`}
+
+                <button
                   onClick={() => addToCartHandler(data._id)}
+                  className="relative inline-flex items-center justify-center px-4 py-2 mt-5 ml-[-5px] text-white transition-all duration-300 ease-in-out border-2 border-red-500 rounded-full hover:bg-red-100  focus:outline-none focus:bg-red-200"
                 >
-                  <span className="text-[#fff] flex items-center">
-                    Add to cart <AiOutlineShoppingCart className="ml-1" />
-                  </span>
-                </div>
+                  <h1 className="flex items-center font-medium cursor-pointer text-black">
+                    Add to cart <FaCartPlus className="ml-1" />
+                  </h1>
+                </button>
               </div>
             </div>
           </div>

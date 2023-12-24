@@ -1,21 +1,26 @@
-import React, { useEffect } from 'react'
-import Login from '../components/Login/Login.jsx'
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+
+// third party
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+// internal imports
+import Login from "../components/Login/Login.jsx";
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if(isAuthenticated === true){
+    if (isAuthenticated === true) {
       navigate("/");
     }
-  }, [])
+  }, [isAuthenticated, navigate]);
   return (
     <div>
-        <Login/>
+      <Login />
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

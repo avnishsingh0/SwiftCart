@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlinePlusCircle } from "react-icons/ai";
+
+// internal imports
 import { categoriesData } from "../../static/data";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { createProduct } from "../../Redux/Action/product";
+
+// third party
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 
 const CreateProduct = () => {
   const { seller } = useSelector((state) => state.seller);
@@ -23,11 +27,11 @@ const CreateProduct = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error); // Display the specific error message
+      toast.error(error); 
     }
     if (success) {
-      toast.success('Product created successfully!');
-      navigate('/dashboard');
+      toast.success("Product created successfully!");
+      navigate("/dashboard");
       window.location.reload();
     }
   }, [dispatch, error, success, navigate]);
@@ -58,8 +62,7 @@ const CreateProduct = () => {
   return (
     <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll">
       <h5 className="text-[30px] font-Poppins text-center">Create Product</h5>
-     
-     
+
       <form onSubmit={handleSubmit}>
         <br />
         <div>

@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
+
+// internal imports
+import { getAllOrdersOfUser } from "../../Redux/Action/order";
+
+// third party
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getAllOrdersOfUser } from "../../Redux/Action/order";
 
 const TrackOrder = () => {
   const { orders } = useSelector((state) => state.order);
@@ -12,7 +16,7 @@ const TrackOrder = () => {
 
   useEffect(() => {
     dispatch(getAllOrdersOfUser(user._id));
-  }, [dispatch]);
+  }, [dispatch, user._id]);
 
   const data = orders && orders.find((item) => item._id === id);
 

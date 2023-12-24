@@ -1,22 +1,24 @@
-import React from 'react'
-import Header from '../components/Layout/Header'
-import CheckoutSteps from "../components/Checkout/CheckoutSteps";
+import React from "react";
+
+// internal imports
+import Footer from "../components/Layout/Footer";
+import Header from "../components/Layout/Header";
 import Checkout from "../components/Checkout/Checkout";
-import Footer from '../components/Layout/Footer';
+import CheckoutSteps from "../components/Checkout/CheckoutSteps";
 
 const CheckoutPage = () => {
   return (
     <div>
-        <Header />
-        <br />
-        <br />
-        <CheckoutSteps active={1} />
-        <Checkout />
-        <br />
-        <br />
-        <Footer />
+      <Header />
+      <br />
+      <br />
+      <CheckoutSteps active={1} />
+      <Checkout />
+      <br />
+      <br />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default CheckoutPage
+export default CheckoutPage;

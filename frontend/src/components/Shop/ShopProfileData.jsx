@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+
+// internal imports
 import styles from "../../styles/styles";
-import ProductCard from "../Route/ProductCard/ProductCard";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsShop } from "../../Redux/Action/product";
-import { getAllEventsShop } from "../../Redux/Action/event";
-import { backend_url } from "../../server";
 import Ratings from "../Products/Ratings";
+import { backend_url } from "../../server";
+import ProductCard from "../Route/ProductCard/ProductCard";
+import { getAllEventsShop } from "../../Redux/Action/event";
+import { getAllProductsShop } from "../../Redux/Action/product";
+
+// third party
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const ShopProfileData = ({ isOwner }) => {
   const { products } = useSelector((state) => {
-    console.log(state); 
+    console.log(state);
     return state.products;
   });
   const { events } = useSelector((state) => state.events);
@@ -21,7 +25,7 @@ const ShopProfileData = ({ isOwner }) => {
   useEffect(() => {
     dispatch(getAllProductsShop(id));
     dispatch(getAllEventsShop(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const allReviews =
     products && products.map((product) => product.reviews).flat();
@@ -103,7 +107,7 @@ const ShopProfileData = ({ isOwner }) => {
           )}
         </div>
       )}
-      
+
       {active === 3 && (
         <div className="w-full">
           {allReviews &&
@@ -114,14 +118,18 @@ const ShopProfileData = ({ isOwner }) => {
                   className="w-[50px] h-[50px] rounded-full"
                   alt=""
                 />
-                 <div className="pl-2">
-                 <div className="flex w-full items-center">
+                <div className="pl-2">
+                  <div className="flex w-full items-center">
                     <h1 className="font-[600] pr-2">{item.user.name}</h1>
                     <Ratings rating={item.rating} />
-                    <p className="font-[400] text-[#000000a7]">{item?.comment}</p>
-                  <p className="text-[#000000a7] text-[14px]">{"2days ago"}</p>
+                    <p className="font-[400] text-[#000000a7]">
+                      {item?.comment}
+                    </p>
+                    <p className="text-[#000000a7] text-[14px]">
+                      {"2days ago"}
+                    </p>
                   </div>
-                 </div>
+                </div>
               </div>
             ))}
         </div>

@@ -1,22 +1,23 @@
+// internal imports
 import LoginPage from "./pages/LoginPage";
-import SignupPage from "../src/pages/SignupPage";
-import ActivationPage from "../src/pages/ActivationPage.jsx";
-import HomePage from "../src/pages/HomePage.jsx";
-import ProductsPage from "../src/pages/ProductsPage";
-import BestSellingPage from "../src/pages/BestSellingPage.jsx";
-import EventsPage from "../src/pages/EventsPage.jsx";
+import UserInbox from "./pages/UserInbox.jsx";
 import FAQPage from "../src/pages/FAQPage.jsx";
-import ProductsDetailsPage from "../src/pages/ProductsDetailsPage.jsx";
+import HomePage from "../src/pages/HomePage.jsx";
+import SignupPage from "../src/pages/SignupPage";
+import PaymentPage from "./pages/PaymentPage.jsx";
+import CheckoutPage from "./pages/CheckoutPage.jsx";
+import ShopLoginPage from "./pages/ShopLoginPage.jsx";
+import ProductsPage from "../src/pages/ProductsPage";
+import EventsPage from "../src/pages/EventsPage.jsx";
 import ProfilePage from "../src/pages/ProfilePage.jsx";
 import ShopCreatePage from "./pages/ShopCreatePage.jsx";
-import SellerActivationPage from "./pages/SellerActivationPage.jsx";
-import ShopLoginPage from "./pages/ShopLoginPage.jsx";
-import CheckoutPage from "./pages/CheckoutPage.jsx";
-import PaymentPage from "./pages/PaymentPage.jsx";
-import OrderSuccessPage from "./pages/OrderSuccessPage.jsx";
-import OrderDetailsPage from "./pages/OrderDetailsPage.jsx";
 import TrackOrderPage from "./pages/TrackOrderPage.jsx";
-import UserInbox from "./pages/UserInbox.jsx";
+import OrderDetailsPage from "./pages/OrderDetailsPage.jsx";
+import OrderSuccessPage from "./pages/OrderSuccessPage.jsx";
+import ActivationPage from "../src/pages/ActivationPage.jsx";
+import BestSellingPage from "../src/pages/BestSellingPage.jsx";
+import SellerActivationPage from "./pages/SellerActivationPage.jsx";
+import ProductsDetailsPage from "../src/pages/ProductsDetailsPage.jsx";
 
 export {
   LoginPage,
@@ -37,5 +38,5 @@ export {
   OrderSuccessPage,
   OrderDetailsPage,
   TrackOrderPage,
-  UserInbox
+  UserInbox,
 };

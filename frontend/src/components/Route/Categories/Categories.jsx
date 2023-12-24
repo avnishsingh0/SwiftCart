@@ -1,7 +1,11 @@
 import React from "react";
+
+// third party
 import { useNavigate } from "react-router-dom";
-import { brandingData, categoriesData } from "../../../static/data";
+
+// internal imports
 import styles from "../../../styles/styles";
+import { brandingData, categoriesData } from "../../../static/data";
 
 const Categories = () => {
   const navigate = useNavigate();

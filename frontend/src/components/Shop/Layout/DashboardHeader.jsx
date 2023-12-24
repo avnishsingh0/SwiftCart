@@ -1,13 +1,20 @@
 import React from "react";
+
+// internal imports
+import { backend_url } from "../../../server";
+
+// third party
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+// react-icons
 import { AiOutlineGift } from "react-icons/ai";
 import { MdOutlineLocalOffer } from "react-icons/md";
-import { Link } from "react-router-dom";
 import { FiPackage, FiShoppingBag } from "react-icons/fi";
 import { BiMessageSquareDetail } from "react-icons/bi";
-import { useSelector } from "react-redux";
-import { backend_url } from "../../../server";
+
 const DashboardHeader = () => {
-    const { seller } = useSelector((state) => state.seller);
+  const { seller } = useSelector((state) => state.seller);
   return (
     <div className="w-full h-[80px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4">
       <div>

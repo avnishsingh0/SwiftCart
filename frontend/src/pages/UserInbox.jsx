@@ -1,15 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import Header from "../components/Layout/Header";
-import { useSelector } from "react-redux";
-import socketIO from "socket.io-client";
-import { format } from "timeago.js";
-import { backend_url, server } from "../server";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
-import { TfiGallery } from "react-icons/tfi";
+
+// internal imports
 import styles from "../styles/styles";
-const ENDPOINT = "https://vernderappchatting-production.up.railway.app/";
+import { backend_url, server } from "../server";
+import Header from "../components/Layout/Header";
+
+// third party
+import axios from "axios";
+// import { format } from "timeago.js";
+import socketIO from "socket.io-client";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+// react icons
+import { TfiGallery } from "react-icons/tfi";
+import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
+
+// end points
+const ENDPOINT = "http://localhost:4000";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const UserInbox = () => {
@@ -21,7 +29,7 @@ const UserInbox = () => {
   const [newMessage, setNewMessage] = useState("");
   const [userData, setUserData] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const [images, setImages] = useState();
+  const [, setImages] = useState();
   const [activeStatus, setActiveStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const scrollRef = useRef(null);
@@ -278,7 +286,7 @@ const MessageList = ({
       }
     };
     getUser();
-  }, [me, data]);
+  }, [me, data, setActiveStatus, online]);
 
   return (
     <div
@@ -373,6 +381,7 @@ const SellerInbox = ({
                 <img
                   src={`${backend_url}${item.images}`}
                   className="w-[300px] h-[300px] object-cover rounded-[10px] ml-2 mb-2"
+                  alt="user-img"
                 />
               )}
               {item.text !== "" && (
@@ -386,7 +395,7 @@ const SellerInbox = ({
                   </div>
 
                   <p className="text-[12px] text-[#000000d3] pt-1">
-                    {format(item.createdAt)}
+                    {/* {format(item.createdAt)} */}
                   </p>
                 </div>
               )}
@@ -396,7 +405,6 @@ const SellerInbox = ({
 
       {/* send message input */}
       <form
-        aria-required={true}
         className="p-3 relative w-full flex justify-between items-center"
         onSubmit={sendMessageHandler}
       >
