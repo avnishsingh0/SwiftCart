@@ -7,7 +7,7 @@
 
 <br/>
 
-### Frontend Deployed URL 👉 [Click here](https://vender-app-frontend-dwr3.vercel.app/)
+### Frontend Deployed URL 👉 [Click here](https://swiftcart-web.vercel.app)
 
 ### Backend API 👉 [Click here](https://venderappbackend-production.up.railway.app/)
 
