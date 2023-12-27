@@ -9,9 +9,9 @@
 
 ### Frontend Deployed URL 👉 [Click here](https://swiftcart-web.vercel.app)
 
-### Backend API 👉 [Click here](https://venderappbackend-production.up.railway.app/)
+### Backend API 👉 [Click here](https://giddy-plum-elephant.cyclic.app)
 
-### Chatting API 👉 [Click here](https://vernderappchatting-production.up.railway.app/)
+### Chatting API 👉 [Click here](https://vernderappchatting-production.up.railway.app)
 <br/>
 
 
