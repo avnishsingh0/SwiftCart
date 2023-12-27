@@ -43,7 +43,9 @@ app.use("/api/v2/payment", payment);
 app.use("/api/v2/order", order);
 app.use("/api/v2/conversation", conversation);
 app.use("/api/v2/message", message );
-
+app.get("/", (req, res) => {
+  res.send("Welcome to SwiftCard");
+});
 const errorHandlerMiddleware = (err, req, res, next) => {
   if (err instanceof ErrorHandler) {
     res.status(err.statusCode).json({
